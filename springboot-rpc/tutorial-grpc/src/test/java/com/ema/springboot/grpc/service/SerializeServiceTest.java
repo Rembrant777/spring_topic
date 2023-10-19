@@ -30,11 +30,11 @@ class SerializeServiceTest {
     }
 
     @Test
-    public void testMockGrpcRequestOK () {
+    public void testMockGrpcRequestOK() {
         GrpcRequest request = genMockGrpcRequest();
         Assertions.assertTrue(Objects.nonNull(request) && request.getMethod().equals("testMethod"));
         Assertions.assertTrue(request.getClazz().equals(this.getClass().getName()));
-        Assertions.assertTrue(Objects.deepEquals(request.getArgs(), new Object [] {Integer.class}));
+        Assertions.assertTrue(Objects.deepEquals(request.getArgs(), new Object[]{Integer.class}));
     }
 
     @Test
@@ -61,6 +61,26 @@ class SerializeServiceTest {
         MockSerializeService mockSerializeService = new MockSerializeService();
         ByteString byteString = mockSerializeService.serialize(grpcRequest);
         Assertions.assertTrue(!byteString.isEmpty());
+    }
+
+
+    @Test
+    public void testDeserializeGrpcServiceRequest() {
+    }
+
+
+    /**
+     * Little confused here, there is no specific methods defined
+     * in the previous method to convert ByteString back into the GrpcRequest.
+     * And it is the same to the GrpcResponse.
+     *
+     * And the GrpcService#Request and Grpcservice#Response are two classes defined in the
+     * GrpcService which is generated from the .proto file.
+     *
+     * add a todo here.
+     */
+    @Test
+    public void testDeserializeGrpcServiceResponse() {
     }
 
 
