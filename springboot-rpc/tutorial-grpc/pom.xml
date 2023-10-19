@@ -17,6 +17,7 @@
         <protostuff.version>1.8.0</protostuff.version>
         <fastjson.version>2.0.41</fastjson.version>
         <sofa.verson>4.0.4</sofa.verson>
+        <common-lang3.version>3.13.0</common-lang3.version>
         <protobuf-java-versoin>3.14.0</protobuf-java-versoin>
         <protoc-gen-grpc-java.version>1.24</protoc-gen-grpc-java.version>
     </properties>
@@ -103,6 +104,13 @@
             <groupId>com.alipay.sofa</groupId>
             <artifactId>hessian</artifactId>
             <version>${sofa.verson}</version>
+        </dependency>
+
+        <!-- common lang3-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${common-lang3.version}</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
