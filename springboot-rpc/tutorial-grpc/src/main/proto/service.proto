@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option java_package = "com.ema.springboot.grpc.springbootstartergrpc";
+option java_package = "com.ema.springboot.grpc.rpc";
 option java_outer_classname = "GrpcService";
 option java_multiple_files = false;
 

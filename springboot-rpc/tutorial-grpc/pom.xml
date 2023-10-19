@@ -3,12 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.ema.springboot.grpc</groupId>
-    <artifactId>spring-boot-starter-grpc</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <groupId>com.ema.springboot</groupId>
+    <artifactId>tutorial-grpc</artifactId>
+    <version>0.9.18-SNAPSHOT</version>
 
-    <name>spring-boot-starter-grpc</name>
-    <description>Demo project for Spring Boot</description>
+    <name>tutorial-grpc</name>
+    <description>Spring Boot GRPC Tutorial Module</description>
 
     <properties>
         <java.version>17</java.version>
@@ -111,7 +111,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    
+
     <build>
         <extensions>
             <extension>
@@ -126,36 +126,52 @@
                 <artifactId>protobuf-maven-plugin</artifactId>
                 <version>0.6.1</version>
                 <configuration>
-                    <!-- Apple M2 os.detected.classifier:osx-aarch_64  -->
-                    <protocArtifact>com.google.protobuf:protoc:${protobuf-java-versoin}:exe:${os.detected.classifier}</protocArtifact>
+                    <protocArtifact>com.google.protobuf:protoc:3.14.0:exe:${os.detected.classifier}</protocArtifact>
                     <pluginId>grpc-java</pluginId>
-                    <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}
+                    </pluginArtifact>
                 </configuration>
                 <executions>
                     <execution>
                         <goals>
                             <goal>compile</goal>
-                            <goal>compile</goal>
+                            <goal>compile-custom</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
+            <!-- https://github.com/grpc/grpc-java/issues/9179 -->
+            <!-- this maven plugin helps to fix JDK 1.8 javax and JDK 17 jakarta incompatible problem-->
+            <plugin>
+                <groupId>io.github.floverfelt</groupId>
+                <artifactId>find-and-replace-maven-plugin</artifactId>
+                <version>1.1.0</version>
+                <executions>
+                    <execution>
+                        <id>exec</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>find-and-replace</goal>
+                        </goals>
+                        <configuration>
+                            <replacementType>file-contents</replacementType>
+                            <baseDir>target/generated-sources/protobuf/</baseDir>
+                            <findRegex>javax</findRegex>
+                            <replaceValue>jakarta</replaceValue>
+                            <recursive>true</recursive>
+                            <fileMask>.java</fileMask>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
-    <distributionManagement>
-
-        <repository>
-            <id>rdc-releases</id>
-            <url>https://repo.rdc.aliyun.com/repository/73801-release-g4ZTFl/</url>
-        </repository>
-
-        <snapshotRepository>
-            <id>rdc-snapshots</id>
-            <url>https://repo.rdc.aliyun.com/repository/73801-snapshot-e8LM6K/</url>
-        </snapshotRepository>
-
-    </distributionManagement>
 </project>
