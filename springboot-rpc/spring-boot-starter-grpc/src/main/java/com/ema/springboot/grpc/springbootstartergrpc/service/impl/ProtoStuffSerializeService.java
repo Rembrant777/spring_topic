@@ -11,7 +11,8 @@ import com.google.protobuf.ByteString;
  */
 public class ProtoStuffSerializeService implements SerializeService {
     public ByteString serialize(GrpcResponse response) {
-        return ProtobufUtils
+        // not implement yet.
+        return null;
     }
 
     public ByteString serialize(GrpcRequest request) {
